@@ -22,7 +22,7 @@ import semmle.python.ApiGraphs
 
 // enviroment variables and command line arguments
 class EnvArgs extends Source {
-  Env() {
+  EnvArgs() {
     // os.getenv('abc')
     this = API::moduleImport("os").getMember("getenv").getACall()
     or
