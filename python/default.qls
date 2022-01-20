@@ -1,0 +1,2 @@
+# https://codeql.github.com/docs/codeql-cli/creating-codeql-query-suites/
+- query: pathinjection.ql
