@@ -20,8 +20,8 @@ import python
 import semmle.python.security.dataflow.PathInjection
 import semmle.python.ApiGraphs
 
-// Local Enviroment Variables
-class Env extends Source {
+// enviroment variables and command line arguments
+class EnvArgs extends Source {
   Env() {
     // os.getenv('abc')
     this = API::moduleImport("os").getMember("getenv").getACall()
@@ -29,6 +29,9 @@ class Env extends Source {
     // os.environ['abc']
     // os.environ.get('abc')
     this = API::moduleImport("os").getMember("environ").getAUse()
+    or
+    // sys.argv[1]
+    this = API::moduleImport("sys").getMember("argv").getAUse()
   }
 }
 
