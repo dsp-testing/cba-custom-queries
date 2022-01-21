@@ -7,7 +7,7 @@
  * @security-severity 9.8
  * @sub-severity high
  * @precision high
- * @id py/command-line-injection
+ * @id py/command-line-injection-customized
  * @tags correctness
  *       security
  *       external/cwe/cwe-078

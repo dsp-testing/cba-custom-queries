@@ -6,7 +6,7 @@
  * @security-severity 7.5
  * @sub-severity high
  * @precision high
- * @id py/path-injection
+ * @id py/path-injection-customized
  * @tags correctness
  *       security
  *       external/cwe/cwe-022
