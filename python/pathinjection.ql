@@ -1,6 +1,6 @@
 /**
- * @name Uncontrolled data used in path expression
- * @description Accessing paths influenced by users can allow an attacker to access unexpected resources.
+ * @name Customized path injection query
+ * @description Customized path injection query
  * @kind path-problem
  * @problem.severity error
  * @security-severity 7.5
@@ -18,22 +18,9 @@
 
 import python
 import semmle.python.security.dataflow.PathInjection
-import semmle.python.ApiGraphs
+import LocalSources
 
-// enviroment variables and command line arguments
-class EnvArgs extends Source {
-  EnvArgs() {
-    // os.getenv('abc')
-    this = API::moduleImport("os").getMember("getenv").getACall()
-    or
-    // os.environ['abc']
-    // os.environ.get('abc')
-    this = API::moduleImport("os").getMember("environ").getAUse()
-    or
-    // sys.argv[1]
-    this = API::moduleImport("sys").getMember("argv").getAUse()
-  }
-}
+class LocalSources extends Source, EnvArgs { }
 
 from CustomPathNode source, CustomPathNode sink
 where pathInjection(source, sink)

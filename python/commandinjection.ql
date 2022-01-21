@@ -7,7 +7,7 @@
  * @security-severity 9.8
  * @sub-severity high
  * @precision high
- * @id py/command-line-injection-customized
+ * @id py/command-line-injection
  * @tags correctness
  *       security
  *       external/cwe/cwe-078
@@ -17,26 +17,10 @@
 import python
 import semmle.python.security.dataflow.CommandInjection
 import semmle.python.security.dataflow.CommandInjectionCustomizations as Customizations
-import semmle.python.ApiGraphs
 import DataFlow::PathGraph
+import LocalSources
 
-// enviroment variables and command line arguments
-class EnvArgs extends Customizations::CommandInjection::Source {
-  EnvArgs() {
-    this.getLocation().getFile().getBaseName().matches("command_injection%") and
-    (
-      // os.getenv('abc')
-      this = API::moduleImport("os").getMember("getenv").getACall()
-      or
-      // os.environ['abc']
-      // os.environ.get('abc')
-      this = API::moduleImport("os").getMember("environ").getAUse()
-      or
-      // sys.argv[1]
-      this = API::moduleImport("sys").getMember("argv").getAUse()
-    )
-  }
-}
+class LocalSources extends Customizations::CommandInjection::Source, EnvArgs { }
 
 from CommandInjection::Configuration config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
